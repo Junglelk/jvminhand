@@ -18,7 +18,13 @@ func (e *ZipEntry) readClass(className string) ([]byte, Entry, error) {
 	}
 
 	// defer 关键字会让随后的代码在函数返回后执行，这样可以保证这个函数一定会被调用
-	defer r.Close()
+	// 这是一个匿名函数，函数声明没有名字，只有参数列表和返回值列表（此处不需要返回值）
+	defer func(r *zip.ReadCloser) {
+		err := r.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(r) // 此处为传入匿名函数的参数
 
 	// 此处是遍历zip压缩包内的文件
 	// 使用for range 关键字来迭代文件，range关键字可以迭代迭代数组、字符串、切片、映射和通道
