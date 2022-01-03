@@ -12,6 +12,7 @@ func newWildcardEntry(path string) CompositeEntry {
 	baseDir := path[:len(path)-1]
 	var compositeEntry []Entry
 
+	// 函数式编程，定义一个函数作为变量
 	walkFn := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
