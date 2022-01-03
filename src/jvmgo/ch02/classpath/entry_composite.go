@@ -23,7 +23,9 @@ func newCompositeEntry(pathList string) CompositeEntry {
 func (c CompositeEntry) readClass(className string) ([]byte, Entry, error) {
 	for _, entry := range c {
 		data, from, err := entry.readClass(className)
-		if err != nil {
+		// 第一次写在这里出了问题，原来写成了不为nil则跳出，这样在每次遍历时，仅仅会遍历第一个文件
+		// 然后就return掉
+		if err == nil {
 			return data, from, err
 		}
 	}
