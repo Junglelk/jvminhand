@@ -51,6 +51,7 @@ func (e *ZipEntry) String() string {
 	return e.absPath
 }
 
+// 从jar包中获取class文件
 func newZipEntry(path string) *ZipEntry {
 	absPath, err := filepath.Abs(path)
 	if err != nil {
