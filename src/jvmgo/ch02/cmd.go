@@ -18,6 +18,8 @@ type Cmd struct {
 func parseCmd() *Cmd {
 	cmd := &Cmd{}
 
+	// 算是函数式编程语言的特征吧，这个虽然看起来像是一个变量，实际上是一个函数
+	// 该函数在无输入或输入参数不足时调用，以显示错误信息
 	flag.Usage = printUsage
 	flag.BoolVar(&cmd.helpFlag, "help", false, "print help message")
 	flag.BoolVar(&cmd.helpFlag, "?", false, "print help message")
