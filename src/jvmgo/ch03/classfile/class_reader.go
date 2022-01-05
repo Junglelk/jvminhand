@@ -1,5 +1,7 @@
 package classfile
 
+import "encoding/binary"
+
 type ClassReader struct {
 	// 在go中，byte为8比特无符号整数
 	data []byte
@@ -14,22 +16,43 @@ func (e *ClassReader) readUint8() uint8 {
 	return val
 }
 
+// 使用uint16读取u2类型的数据
+// BigEndian 是ByteOrder的大端实现
 func (e *ClassReader) readUint16() uint16 {
-
+	val := binary.BigEndian.Uint16(e.data)
+	e.data = e.data[2:]
+	return val
 }
 
 func (e *ClassReader) readUint32() uint32 {
-
+	val := binary.BigEndian.Uint32(e.data)
+	e.data = e.data[4:]
+	return val
 }
 
+// 读取uint64 虽然Java虚拟机规范并没有定义u8
 func (e *ClassReader) readUint64() uint64 {
-
+	val := binary.BigEndian.Uint64(e.data)
+	e.data = e.data[8:]
+	return val
 }
 
 func (e *ClassReader) readUint16s() []uint16 {
-
+	n := e.readUint16()
+	// make 用于初始化slice, map 或 chan
+	// 这个的意思是，新建一个uint16的切片，长度和容量均为 n
+	s := make([]uint16, n)
+	for i := range s {
+		s[i] = e.readUint16()
+	}
+	return s
 }
 
-func (e *ClassReader) readBytes(length uint32) []byte {
-
+// 用于读取指定数量的字节
+func (e *ClassReader) readBytes(n uint32) []byte {
+	// 从 0 往后数 n 个
+	bytes := e.data[:n]
+	// 从第 n 个到最后
+	e.data = e.data[n:]
+	return bytes
 }
