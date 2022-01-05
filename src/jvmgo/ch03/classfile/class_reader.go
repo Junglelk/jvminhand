@@ -50,7 +50,7 @@ func (e *ClassReader) readUint16s() []uint16 {
 
 // 用于读取指定数量的字节
 func (e *ClassReader) readBytes(n uint32) []byte {
-	// 从 0 往后数 n 个
+	// 从下标 0 到下标 n
 	bytes := e.data[:n]
 	// 从第 n 个到最后
 	e.data = e.data[n:]
