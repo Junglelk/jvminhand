@@ -25,7 +25,7 @@ type ClassFile struct {
 	// 字段表
 	fields []*MemberInfo
 	// 方法表
-	method []*MemberInfo
+	methods []*MemberInfo
 	// 属性表
 	attributes []AttributeInfo
 }
@@ -55,7 +55,28 @@ func Parse(classData []byte) (cf *ClassFile, err error) {
 	return
 }
 
+// 读取并验证一个类文件
 func (e *ClassFile) read(reader *ClassReader) {
+
+	e.readAndCheckMagic(reader)
+
+	e.readAndCheckVersion(reader)
+
+	e.constantPool = readConstantPool(reader)
+
+	e.accessFlags = reader.readUint16()
+
+	e.thisClass = reader.readUint16()
+
+	e.superClass = reader.readUint16()
+
+	e.interfaces = reader.readUint16s()
+
+	e.fields = readMembers(reader, e.constantPool)
+
+	e.methods = readMembers(reader, e.constantPool)
+
+	e.attributes = readAttributes(reader, e.constantPool)
 
 }
 
@@ -69,32 +90,32 @@ func (e *ClassFile) readAndCheckVersion(reader *ClassReader) {
 
 // MinorVersion getter
 func (e *ClassFile) MinorVersion() uint16 {
-
+	return e.minorVersion
 }
 
 // MajorVersion getter
 func (e *ClassFile) MajorVersion() uint16 {
-
+	return e.majorVersion
 }
 
 // ConstantPool getter
 func (e *ClassFile) ConstantPool() ConstantPool {
-
+	return e.constantPool
 }
 
 // AccessFlags getter
 func (e *ClassFile) AccessFlags() uint16 {
-
+	return e.accessFlags
 }
 
 // Fields getter
 func (e *ClassFile) Fields() []MemberInfo {
-
+	return e.fields
 }
 
 // Methods getter
 func (e *ClassFile) Methods() []MemberInfo {
-
+	return e.methods
 }
 
 func (e *ClassFile) ClassName() string {
