@@ -24,13 +24,16 @@ func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
 
 func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 	// 新建一个结构类型，使用结构字面量来初始化，& 符号表示取指针，整个语句表示返回一个MemberInfo指针
-	return &MemberInfo{
-		cp:              cp,
-		accessFlags:     reader.readUint16(),
-		nameIndex:       reader.readUint16(),
-		descriptorIndex: reader.readUint16(),
-		attribute:       readAttributes(reader, cp),
-	}
+	// 最后一个变量后面，必须有一个逗号
+	//return &MemberInfo{
+	//	cp:              cp,
+	//	accessFlags:     reader.readUint16(),
+	//	nameIndex:       reader.readUint16(),
+	//	descriptorIndex: reader.readUint16(),
+	//	attribute:       readAttributes(reader, cp),
+	//}
+	// 也可以使用这种方式，显然，这种方式对变量的顺序有严格要求，但不要求最后保留一个逗号
+	return &MemberInfo{cp, reader.readUint16(), reader.readUint16(), reader.readUint16(), readAttributes(reader, cp)}
 }
 
 func (e *MemberInfo) AccessFlags() uint16 {
