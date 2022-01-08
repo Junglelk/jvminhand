@@ -23,7 +23,7 @@ func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	case ConstantInteger:
 		return &ConstantIntegerInfo{}
 	case ConstantFloat:
-		return &ConstantFloaytInfo{}
+		return &ConstantFloatInfo{}
 	case ConstantLong:
 		return &ConstantLongInfo{}
 	case ConstantDouble:
