@@ -80,12 +80,32 @@ func (e *ClassFile) read(reader *ClassReader) {
 
 }
 
+// class文件以16进制数字 CAFEBABE 开头，一共 8 个字节，所以使用 readUint32 函数读取
 func (e *ClassFile) readAndCheckMagic(reader *ClassReader) {
-
+	magic := reader.readUint32()
+	// 校验魔数是否正确
+	if magic != 0xCAFEBABE {
+		// java虚拟机规范中规定如果魔数不符合，则抛出“java.lang.ClassFormatError”异常
+		// 但异常本身需要java虚拟机支持，目前未编写到这一步，先使用panic来终止程序运行
+		panic("java.lang.ClassFormatError:magic!")
+	}
 }
 
+// 读取并验证版本号，java的版本号分为次版本号和主版本号，都是u2类型，如果主版本号为M，次版本号为m，则完整版本号可以写为 M.m
+// 次版本号JDK 1.2 （含）之后就没有再使用过了，版本号在 JDK 1.0.2 时为 45.0~45.3 , JDK 1.1 为45.0 ~ 45.65535，从 JDK 1.2 开始，版本号从 46.0 递增，Java8 为 52.0
 func (e *ClassFile) readAndCheckVersion(reader *ClassReader) {
-
+	// 目前仅解析到Java8
+	e.minorVersion = reader.readUint16()
+	e.majorVersion = reader.readUint16()
+	switch e.majorVersion {
+	case 45:
+		return
+	case 46, 47, 48, 49, 50, 51, 52:
+		if e.minorVersion == 0 {
+			return
+		}
+	}
+	panic("java.lang.UnsupportedClassVersion")
 }
 
 // MinorVersion getter
@@ -99,11 +119,13 @@ func (e *ClassFile) MajorVersion() uint16 {
 }
 
 // ConstantPool getter
+// 版本号之后是常量池
 func (e *ClassFile) ConstantPool() ConstantPool {
 	return e.constantPool
 }
 
 // AccessFlags getter
+// 常量池之后是类访问标记，访问标识符是一个 16 位的 bitmask，指出class文件定义的是类还是接口，访问级别是 public 还是 private 等。
 func (e *ClassFile) AccessFlags() uint16 {
 	return e.accessFlags
 }
@@ -118,14 +140,25 @@ func (e *ClassFile) Methods() []MemberInfo {
 	return e.methods
 }
 
+// ClassName 函数从常量池中查找类名
 func (e *ClassFile) ClassName() string {
-
+	return e.constantPool.getClassName(e.thisClass)
 }
 
+// SuperClassName 函数从常量池中查找超类名
 func (e *ClassFile) SuperClassName() string {
-
+	if e.superClass > 0 {
+		return e.constantPool.getClassName(e.superClass)
+	}
+	// 没有超类的情况，Java中只有java.lang.Object无超类
+	return ""
 }
 
 func (e *ClassFile) InterfaceName() []string {
+	interfaceNames := make([]string, len(e.interfaces))
 
+	for i, cpIndex := range e.interfaces {
+		interfaceNames[i] = e.constantPool.getClassName(cpIndex)
+	}
+	return interfaceNames
 }
