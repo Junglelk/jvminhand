@@ -23,7 +23,7 @@ func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
 }
 
 func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
-	// 新建并初始化每个变量的写法
+	// 新建一个结构类型，使用结构字面量来初始化，& 符号表示取指针，整个语句表示返回一个MemberInfo指针
 	return &MemberInfo{
 		cp:              cp,
 		accessFlags:     reader.readUint16(),
