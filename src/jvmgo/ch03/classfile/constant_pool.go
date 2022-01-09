@@ -1,5 +1,11 @@
 package classfile
 
+/*
+	常量池小结：
+		可以把常量池中的常量分为两类，字面量和符号引用。字面量包括数字常量和字符串常量，符号引用包括类和接口名、地段和方法信息等。
+		除了字面量其他常量都是通过索引直接或间接指向 CONSTANT_Utf8_info 常量
+*/
+
 // ConstantPool 使用type关键字来定义一个类型，用Java的话讲，就是创建一个类，这个类可以是结构体（以struct开头，后跟大括号），可以是某种类型
 type ConstantPool []ConstantInfo
 
