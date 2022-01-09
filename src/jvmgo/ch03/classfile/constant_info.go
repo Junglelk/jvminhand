@@ -24,3 +24,8 @@ const (
 	ConstantMethodtype         = 16
 	ConstantInvokeDynamic      = 18
 )
+
+type ConstantInfo interface {
+	// 读取常量信息，需要由集体的常量结构体来实现
+	readInfo(reader *ClassReader)
+}

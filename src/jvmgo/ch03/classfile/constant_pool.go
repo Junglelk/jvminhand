@@ -3,11 +3,6 @@ package classfile
 // ConstantPool 使用type关键字来定义一个类型，用Java的话讲，就是创建一个类，这个类可以是结构体（以struct开头，后跟大括号），可以是某种类型
 type ConstantPool []ConstantInfo
 
-type ConstantInfo interface {
-	// 读取常量信息，需要由集体的常量结构体来实现
-	readInfo(reader *ClassReader)
-}
-
 // readConstantInfo 函数先读取出 tag 值，然后调用newConstantInfo() 函数创建具体的常量
 // 然后调用常量的 readInfo() 方法读取常量信息
 func readConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {

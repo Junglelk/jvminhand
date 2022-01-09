@@ -14,7 +14,7 @@ type ConstantUtf8Info struct {
 }
 
 // readInfo 方法先读取出 []byte ，然后调用 decodeMUTF8() 函数把它解码成 Go 字符串。
-func (e *ConstantUtf8Info) readInfo(reader ClassReader) {
+func (e *ConstantUtf8Info) readInfo(reader *ClassReader) {
 	length := uint32(reader.readUint16())
 	bytes := reader.readBytes(length)
 	e.str = decodeMUTF8(bytes)
