@@ -42,6 +42,10 @@ func readAttribute(reader *ClassReader, cp ConstantPool) AttributeInfo {
 	return attrInfo
 }
 
+// readAttribute() 先读取属性名索引，根据它从常量池中找到属性名，然后读取属性长度，接着调用newAttributeInfo()函数创建具体的属性实例。
+// newAttributeInfo Java虚拟机内置了 23 种属性，先解析其中的 8 种
+// 23 种预定义属性可以分为三组：第一组是实现Java虚拟机必须的，共有 5 种；第二组属性是Java类库所必须的，共有 12 种；第三组属性主要是提供给工具使用的，共有 6 种。
+// 第三组属于可选属性，即可以不出现在class文件中。如果 class 文件中存在第三组属性，则Java虚拟机和Java类库也可以使用，比如使用LineNumberTable属性在异常堆栈中显示行号（难道这是异常信息有行号的原因？）
 func newAttributeInfo(attrName string, attrLen uint32, cp ConstantPool) AttributeInfo {
 	switch attrName {
 	case "Code":
