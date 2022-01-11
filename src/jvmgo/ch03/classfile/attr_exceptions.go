@@ -1,6 +1,6 @@
 package classfile
 
-// ExceptionAttribute 是变长属性，记录方法抛出的异常表
+// ExceptionsAttribute 是变长属性，记录方法抛出的异常表
 /*
 	Exceptions_attribute{
 		u2 attribute_name_index;
@@ -9,13 +9,13 @@ package classfile
 		u2 exception_index_table[number_of_exceptions];
 	}
 */
-type ExceptionAttribute struct {
+type ExceptionsAttribute struct {
 	exceptionIndexTable []uint16
 }
 
-func (e *ExceptionAttribute) readInfo(reader *ClassReader) {
+func (e *ExceptionsAttribute) readInfo(reader *ClassReader) {
 	e.exceptionIndexTable = reader.readUint16s()
 }
-func (e *ExceptionAttribute) ExceptionIndexTable() []uint16 {
+func (e *ExceptionsAttribute) ExceptionIndexTable() []uint16 {
 	return e.exceptionIndexTable
 }
