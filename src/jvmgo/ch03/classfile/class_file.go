@@ -131,12 +131,12 @@ func (e *ClassFile) AccessFlags() uint16 {
 }
 
 // Fields getter
-func (e *ClassFile) Fields() []MemberInfo {
+func (e *ClassFile) Fields() []*MemberInfo {
 	return e.fields
 }
 
 // Methods getter
-func (e *ClassFile) Methods() []MemberInfo {
+func (e *ClassFile) Methods() []*MemberInfo {
 	return e.methods
 }
 
