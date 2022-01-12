@@ -29,3 +29,48 @@ type ConstantInfo interface {
 	// 读取常量信息，需要由集体的常量结构体来实现
 	readInfo(reader *ClassReader)
 }
+
+// readConstantInfo 函数先读取出 tag 值，然后调用newConstantInfo() 函数创建具体的常量
+// 然后调用常量的 readInfo() 方法读取常量信息
+func readConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {
+	tag := reader.readUint8()
+	c := newConstantInfo(tag, cp)
+	return c
+}
+
+// newConstantInfo 根据tag值创建具体的常量
+func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
+	switch tag {
+
+	case ConstantInteger:
+		return &ConstantIntegerInfo{}
+	case ConstantFloat:
+		return &ConstantFloatInfo{}
+	case ConstantLong:
+		return &ConstantLongInfo{}
+	case ConstantDouble:
+		return &ConstantDoubleInfo{}
+	case ConstantUtf8:
+		return &ConstantUtf8Info{}
+	case ConstantString:
+		return &ConstantStringInfo{}
+	case ConstantClass:
+		return &ConstantClassInfo{}
+	case ConstantFieldRef:
+		return &ConstantFieldrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case ConstantMethodRef:
+		return &ConstantMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case ConstantInterfaceMethodRef:
+		return &ConstantInterfaceMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case ConstantNameAndType:
+		return &ConstantNameAndTypeInfo{}
+	case ConstantMethodtype:
+		return &ConstantMethodTypeInfo{}
+	case ConstantMethodHandle:
+		return &ConstantMethodHandleInfo{}
+	case ConstantInvokeDynamic:
+		return &ConstantInvokeDynamicInfo{}
+	default:
+		panic("java.lang.ClassFormatError: constant pool tag !")
+	}
+}
