@@ -154,7 +154,7 @@ func (e *ClassFile) SuperClassName() string {
 	return ""
 }
 
-func (e *ClassFile) InterfaceName() []string {
+func (e *ClassFile) InterfaceNames() []string {
 	interfaceNames := make([]string, len(e.interfaces))
 
 	for i, cpIndex := range e.interfaces {
