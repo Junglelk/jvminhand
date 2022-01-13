@@ -3,6 +3,9 @@ package classfile
 import "fmt"
 
 // ClassFile Java虚拟机规范中接口表、字段表、方法表、属性表都有各自的计数器
+// All problems in computer science can be solved by another level of indirection.
+// -- David Wheeler
+// ClassFile 就是为了实现类加载而增加的中间层
 // Go语言中的访问控制非常简单，只有公开和私有两种。所有首字母大写的类型、结构体、字段、变量、函数、方法等等都是公开的，
 // 首字母小写的都是私有的。
 type ClassFile struct {
