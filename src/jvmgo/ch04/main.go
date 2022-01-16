@@ -20,6 +20,7 @@ func main() {
 
 func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	//param := classpath.JvmParam{Xss: cmd.Xss}
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	cf := loadClass(className, cp)
 	fmt.Println(cmd.class)

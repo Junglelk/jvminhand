@@ -13,7 +13,7 @@ type Thread struct {
 
 func NewThread() *Thread {
 	// TODO 此处可以修改命令行参数来修改大小
-	return &Thread{stack: newStack(Cmd.Xss * 1024)}
+	return &Thread{stack: newStack(1 * 1024)}
 }
 
 // PC getter方法

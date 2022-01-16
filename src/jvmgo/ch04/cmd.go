@@ -12,6 +12,7 @@ type Cmd struct {
 	cpOption    string
 	class       string
 	XjreOption  string
+	Xss         int64
 	args        []string
 }
 
@@ -27,6 +28,7 @@ func parseCmd() *Cmd {
 	flag.StringVar(&cmd.cpOption, "classpath", "", "classpath")
 	flag.StringVar(&cmd.cpOption, "cp", "", "classpath")
 	flag.StringVar(&cmd.XjreOption, "Xjre", "", "path to jre")
+	flag.Int64Var(&cmd.Xss, "Xss", 1, "the length of heap and stack")
 	flag.Parse()
 	args := flag.Args()
 
