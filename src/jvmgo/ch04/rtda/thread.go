@@ -27,12 +27,12 @@ func (e *Thread) SetPC(pc int) {
 }
 
 func (e *Thread) PushFrame(frame *Frame) {
-
+	e.stack.push(frame)
 }
 
 func (e *Thread) PopFrame() *Frame {
-
+	return e.stack.pop()
 }
 func (e *Thread) CurrentFrame() *Frame {
-
+	return e.stack.top()
 }
