@@ -3,7 +3,7 @@ package rtda
 // Frame lower 字段用来实现链表数据结构，localVars 字段保存局部变量指针，operandStack 字段保存操作数指针
 type Frame struct {
 	lower        *Frame
-	localVars    LocalVaris
+	localVars    LocalVars
 	operandStack *OperandStack
 }
 
