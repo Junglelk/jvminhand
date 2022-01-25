@@ -18,9 +18,17 @@ type Frame struct {
 	+-------+		  +-------+	   		+-------+		  +-------+
 */
 // 参数类型一致时，可以只写一个
-func newFrame(maxLocals, maxStack uint) *Frame {
+func NewFrame(maxLocals, maxStack uint) *Frame {
 	return &Frame{
 		localVars:    newLocalVars(maxLocals),
 		operandStack: newOperandStack(maxStack),
 	}
+}
+
+// LocalVars getters
+func (e *Frame) LocalVars() LocalVars {
+	return e.localVars
+}
+func (e *Frame) OperandStack() *OperandStack {
+	return e.operandStack
 }

@@ -29,7 +29,7 @@ func (e LocalVars) SetFloat(index uint, val float32) {
 	e[index].num = int32(bits)
 }
 
-func (e LocalVars) getFloat(index uint) float32 {
+func (e LocalVars) GetFloat(index uint) float32 {
 	bits := uint32(e[index].num)
 	return math.Float32frombits(bits)
 }
