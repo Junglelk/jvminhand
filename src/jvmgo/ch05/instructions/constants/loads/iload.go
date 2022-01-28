@@ -1,4 +1,4 @@
-package constants
+package loads
 
 import (
 	"jvmgo/jvmgo/ch05/instructions/base"
