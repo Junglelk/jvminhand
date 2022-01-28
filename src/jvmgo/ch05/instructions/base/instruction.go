@@ -51,7 +51,7 @@ type Index8Instruction struct {
 }
 
 func (e *Index8Instruction) FetchOperands(reader *BytecodeReader) {
-	e.Index = uint(reader.ReaderUint8())
+	e.Index = uint(reader.ReadUint8())
 }
 
 // Index16Instruction 有些指令需要访问运行时常量池，常量池索引由两字节操作数给出
@@ -60,5 +60,5 @@ type Index16Instruction struct {
 }
 
 func (e *Index16Instruction) FetchOperands(reader *BytecodeReader) {
-	e.Index = uint(reader.ReaderUint16())
+	e.Index = uint(reader.ReadUint16())
 }
