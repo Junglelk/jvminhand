@@ -23,8 +23,8 @@ type FLOAD_3 struct {
 }
 
 func _fload(frame *rtda.Frame, index uint) {
-	val := frame.LocalVars().GetDouble(index)
-	frame.OperandStack().PushDouble(val)
+	val := frame.LocalVars().GetFloat(index)
+	frame.OperandStack().PushFloat(val)
 }
 
 func (e *FLOAD) Execute(frame *rtda.Frame) {
