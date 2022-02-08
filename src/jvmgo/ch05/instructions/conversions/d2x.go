@@ -31,13 +31,13 @@ func (e *D2I) Execute(frame *rtda.Frame) {
 func (e *D2F) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	d := stack.PopDouble()
-	i := float32(d)
-	stack.PushFloat(i)
+	f := float32(d)
+	stack.PushFloat(f)
 }
 
 func (e *D2L) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	d := stack.PopDouble()
-	i := int64(d)
-	stack.PushLong(i)
+	l := int64(d)
+	stack.PushLong(l)
 }
