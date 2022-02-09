@@ -37,12 +37,14 @@ func (e *IFNE) Execute(frame *rtda.Frame) {
 		base.Branch(frame, e.Offset)
 	}
 }
+
 func (e *IFLT) Execute(frame *rtda.Frame) {
 	val := frame.OperandStack().PopInt()
 	if val < 0 {
 		base.Branch(frame, e.Offset)
 	}
 }
+
 func (e *IFLE) Execute(frame *rtda.Frame) {
 	val := frame.OperandStack().PopInt()
 	if val <= 0 {
@@ -56,6 +58,7 @@ func (e *IFGT) Execute(frame *rtda.Frame) {
 		base.Branch(frame, e.Offset)
 	}
 }
+
 func (e *IFGE) Execute(frame *rtda.Frame) {
 	val := frame.OperandStack().PopInt()
 	if val >= 0 {
