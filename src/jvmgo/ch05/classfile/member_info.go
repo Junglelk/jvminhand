@@ -48,5 +48,21 @@ func (e *MemberInfo) Name() string {
 // Descriptor 从常量池中查找字段或方法描述符
 func (e *MemberInfo) Descriptor() string {
 	return e.cp.getUtf8(e.descriptorIndex)
+}
 
+func (e *MemberInfo) CodeAttribute() *CodeAttribute {
+	for _, attrInfo := range e.attribute {
+		// 此处的x.(type)的.(type)为固定写法，只能在switch语句中使用。
+		// 作用为返回 x 的类型
+		switch attrInfo.(type) {
+		case *CodeAttribute:
+			// 断言用法举例
+			// var w io.Writer
+			// w = os.Stdout
+			// f := w.(*os.File) // success: f == os.Stdout
+			// c := w.(*bytes.Buffer) // panic: interface holds *os.File, not *bytes.Buffer
+			return attrInfo.(*CodeAttribute)
+		}
+	}
+	return nil
 }
