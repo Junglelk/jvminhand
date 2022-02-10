@@ -5,6 +5,8 @@ type Frame struct {
 	lower        *Frame
 	localVars    LocalVars
 	operandStack *OperandStack
+	thread       *Thread
+	nextPc       int
 }
 
 /*
@@ -18,8 +20,9 @@ type Frame struct {
 	+-------+		  +-------+	   		+-------+		  +-------+
 */
 // 参数类型一致时，可以只写一个
-func NewFrame(maxLocals, maxStack uint) *Frame {
+func NewFrame(thread *Thread, maxLocals, maxStack uint) *Frame {
 	return &Frame{
+		thread:       thread,
 		localVars:    newLocalVars(maxLocals),
 		operandStack: newOperandStack(maxStack),
 	}
@@ -31,4 +34,20 @@ func (e *Frame) LocalVars() LocalVars {
 }
 func (e *Frame) OperandStack() *OperandStack {
 	return e.operandStack
+}
+
+func (e *Frame) Thread() *Thread {
+	return e.thread
+}
+
+func (e *Frame) SetThread(thread *Thread) {
+	e.thread = thread
+}
+
+func (e *Frame) NextPC() int {
+	return e.nextPc
+}
+
+func (e *Frame) SetNextPC(nextPc int) {
+	e.nextPc = nextPc
 }
