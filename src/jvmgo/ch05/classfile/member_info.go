@@ -10,7 +10,7 @@ type MemberInfo struct {
 	// 常量池索引，给出字段或方法的描述符
 	descriptorIndex uint16
 	// 属性表
-	attribute []AttributeInfo
+	attributes []AttributeInfo
 }
 
 func readMembers(reader *ClassReader, cp ConstantPool) []*MemberInfo {
@@ -30,7 +30,7 @@ func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 	//	accessFlags:     reader.readUint16(),
 	//	nameIndex:       reader.readUint16(),
 	//	descriptorIndex: reader.readUint16(),
-	//	attribute:       readAttributes(reader, cp),
+	//	attributes:       readAttributes(reader, cp),
 	//}
 	// 也可以使用这种方式，显然，这种方式对变量的顺序有严格要求，但不要求最后保留一个逗号
 	return &MemberInfo{cp, reader.readUint16(), reader.readUint16(), reader.readUint16(), readAttributes(reader, cp)}
@@ -51,7 +51,7 @@ func (e *MemberInfo) Descriptor() string {
 }
 
 func (e *MemberInfo) CodeAttribute() *CodeAttribute {
-	for _, attrInfo := range e.attribute {
+	for _, attrInfo := range e.attributes {
 		// 此处的x.(type)的.(type)为固定写法，只能在switch语句中使用。
 		// 作用为返回 x 的类型
 		switch attrInfo.(type) {
