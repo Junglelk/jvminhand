@@ -6,6 +6,22 @@ type BytecodeReader struct {
 	pc   int
 }
 
+func (e *BytecodeReader) Code() []byte {
+	return e.code
+}
+
+func (e *BytecodeReader) SetCode(code []byte) {
+	e.code = code
+}
+
+func (e *BytecodeReader) PC() int {
+	return e.pc
+}
+
+func (e *BytecodeReader) SetPC(pc int) {
+	e.pc = pc
+}
+
 func (e *BytecodeReader) Reset(code []byte, pc int) {
 	e.code = code
 	e.pc = pc
