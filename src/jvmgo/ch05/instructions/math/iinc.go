@@ -10,20 +10,20 @@ import (
 */
 
 type IINC struct {
-	index uint
+	Index uint
 	Const int32
 }
 
 // FetchOperands 方法从字节码中获取操作数
 func (e *IINC) FetchOperands(reader *base.BytecodeReader) {
-	e.index = uint(reader.ReadUint8())
+	e.Index = uint(reader.ReadUint8())
 	e.Const = int32(reader.ReadInt8())
 }
 
 // Execute 从局部变量表中获取变量，给他加上常量值，再将结果写回局部变量表
 func (e *IINC) Execute(frame *rtda.Frame) {
 	localVars := frame.LocalVars()
-	val := localVars.GetInt(e.index)
+	val := localVars.GetInt(e.Index)
 	val += e.Const
-	localVars.SetInt(e.index, val)
+	localVars.SetInt(e.Index, val)
 }
