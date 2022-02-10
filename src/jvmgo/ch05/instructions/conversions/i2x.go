@@ -16,6 +16,37 @@ type I2D struct {
 type I2L struct {
 	base.NoOperandsInstruction
 }
+type I2B struct {
+	base.NoOperandsInstruction
+}
+type I2C struct {
+	base.NoOperandsInstruction
+}
+
+type I2S struct {
+	base.NoOperandsInstruction
+}
+
+func (e *I2B) Execute(frame *rtda.Frame) {
+	stack := frame.OperandStack()
+	i := stack.PopInt()
+	b := int32(int8(i))
+	stack.PushInt(b)
+}
+
+func (e *I2C) Execute(frame *rtda.Frame) {
+	stack := frame.OperandStack()
+	i := stack.PopInt()
+	c := int32(uint16(i))
+	stack.PushInt(c)
+}
+
+func (e *I2S) Execute(frame *rtda.Frame) {
+	stack := frame.OperandStack()
+	i := stack.PopInt()
+	s := int32(int16(i))
+	stack.PushInt(s)
+}
 
 func (e *I2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

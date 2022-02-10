@@ -2,9 +2,9 @@ package extended
 
 import (
 	"jvmgo/jvmgo/ch05/instructions/base"
-	"jvmgo/jvmgo/ch05/instructions/constants/loads"
-	"jvmgo/jvmgo/ch05/instructions/constants/stores"
+	loads2 "jvmgo/jvmgo/ch05/instructions/loads"
 	"jvmgo/jvmgo/ch05/instructions/math"
+	stores2 "jvmgo/jvmgo/ch05/instructions/stores"
 	"jvmgo/jvmgo/ch05/rtda"
 )
 
@@ -23,52 +23,52 @@ func (e *WIDE) FetchOperands(reader *base.BytecodeReader) {
 	switch opcode {
 	// iload
 	case 0x15:
-		inst := &loads.ILOAD{}
+		inst := &loads2.ILOAD{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// lload
 	case 0x16:
-		inst := &loads.LLOAD{}
+		inst := &loads2.LLOAD{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// fload
 	case 0x17:
-		inst := &loads.FLOAD{}
+		inst := &loads2.FLOAD{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// dload
 	case 0x18:
-		inst := &loads.DLOAD{}
+		inst := &loads2.DLOAD{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// aload
 	case 0x19:
-		inst := &loads.ALOAD{}
+		inst := &loads2.ALOAD{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// istore
 	case 0x36:
-		inst := &stores.ISTORE{}
+		inst := &stores2.ISTORE{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// lstore
 	case 0x37:
-		inst := &stores.LSTORE{}
+		inst := &stores2.LSTORE{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// fstore
 	case 0x38:
-		inst := &stores.FSTORE{}
+		inst := &stores2.FSTORE{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// dstore
 	case 0x39:
-		inst := &stores.DSTORE{}
+		inst := &stores2.DSTORE{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// astore
 	case 0x3a:
-		inst := &stores.ASTORE{}
+		inst := &stores2.ASTORE{}
 		inst.Index = uint(reader.ReadUint16())
 		e.modifiedInstruction = inst
 	// iinc
