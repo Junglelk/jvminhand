@@ -71,11 +71,11 @@ func (e *Classpath) parseUserClasspath(cpOption string) {
 // ReadClass 方法依次从启动类路径，扩展类路径和用户路径中搜索class文件
 func (e *Classpath) ReadClass(className string) ([]byte, Entry, error) {
 	className = className + ".class"
-	if data, entry, err := e.bootClasspath.readClass(className); err == nil {
+	if data, entry, err := e.bootClasspath.readClass(className); data != nil && err == nil {
 		return data, entry, err
 	}
 
-	if data, entry, err := e.extClasspath.readClass(className); err != nil {
+	if data, entry, err := e.extClasspath.readClass(className); data != nil && err != nil {
 		return data, entry, err
 	}
 	return e.userClasspath.readClass(className)
