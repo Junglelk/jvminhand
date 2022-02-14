@@ -12,3 +12,18 @@
 ## ch04 运行时数据区
   
 ## ch05 指令集和解释器
+```java
+public class GaussTest {
+    public static void main(String[] args) {
+        int sum = 0;
+        for (int i = 1; i <= 100; i++) {
+            sum += i;
+        }
+        System.out.println(sum);
+    }
+}
+
+```
+  
+出现5050计算结果，正解！
+![image](https://user-images.githubusercontent.com/63081109/153890107-bd61b372-3900-4d06-9872-506a3d149ecc.png)
