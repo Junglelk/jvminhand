@@ -38,8 +38,8 @@ func (e *BytecodeReader) ReadInt8() int8 {
 }
 
 func (e *BytecodeReader) ReadUint16() uint16 {
-	byte1 := uint16(e.code[e.ReadUint8()])
-	byte2 := uint16(e.code[e.ReadUint8()])
+	byte1 := uint16(e.ReadUint8())
+	byte2 := uint16(e.ReadUint8())
 	return (byte1 << 8) | byte2
 }
 
@@ -48,10 +48,10 @@ func (e *BytecodeReader) ReadInt16() int16 {
 }
 
 func (e *BytecodeReader) ReadUint32() uint32 {
-	byte1 := uint32(e.code[e.ReadUint8()])
-	byte2 := uint32(e.code[e.ReadUint8()])
-	byte3 := uint32(e.code[e.ReadUint8()])
-	byte4 := uint32(e.code[e.ReadUint8()])
+	byte1 := uint32(e.ReadUint8())
+	byte2 := uint32(e.ReadUint8())
+	byte3 := uint32(e.ReadUint8())
+	byte4 := uint32(e.ReadUint8())
 	return (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4
 }
 
