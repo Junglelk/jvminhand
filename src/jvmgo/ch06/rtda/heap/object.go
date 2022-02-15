@@ -1,4 +1,4 @@
-package rtda
+package heap
 
 /*
 	运行Java程序时，Java虚拟机需要使用内存来存放各式各样的数据。Java虚拟机规范把这些内存区域叫做运行时数据区。

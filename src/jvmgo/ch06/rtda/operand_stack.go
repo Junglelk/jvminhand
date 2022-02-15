@@ -1,6 +1,9 @@
 package rtda
 
-import "math"
+import (
+	"jvmgo/jvmgo/ch06/rtda/heap"
+	"math"
+)
 
 /*
 	操作数栈大小是编译器已经确定的，所以可以用 []Slot 来实现。
@@ -63,12 +66,12 @@ func (e *OperandStack) PopDouble() float64 {
 	return math.Float64frombits(uint64(e.PopLong()))
 }
 
-func (e *OperandStack) PushRef(val *Object) {
+func (e *OperandStack) PushRef(val *heap.Object) {
 	e.slots[e.size].ref = val
 	e.size++
 }
 
-func (e *OperandStack) PopRef() *Object {
+func (e *OperandStack) PopRef() *heap.Object {
 	e.size--
 	ref := e.slots[e.size].ref
 	e.slots[e.size].ref = nil

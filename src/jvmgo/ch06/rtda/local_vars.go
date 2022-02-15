@@ -1,6 +1,9 @@
 package rtda
 
-import "math"
+import (
+	"jvmgo/jvmgo/ch06/rtda/heap"
+	"math"
+)
 
 type LocalVars []Slot
 
@@ -61,10 +64,10 @@ func (e LocalVars) GetDouble(index uint) float64 {
 }
 
 // SetRef 引用类型的直接存取
-func (e LocalVars) SetRef(index uint, ref *Object) {
+func (e LocalVars) SetRef(index uint, ref *heap.Object) {
 	e[index].ref = ref
 }
 
-func (e LocalVars) GetRef(index uint) *Object {
+func (e LocalVars) GetRef(index uint) *heap.Object {
 	return e[index].ref
 }
