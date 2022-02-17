@@ -37,3 +37,31 @@ func newClass(cf *ClassFile) *Class {
 	class.methods = newMethods(class, cf.Methods())
 	return class
 }
+
+func (e *Class) IsPublic() bool {
+	return 0 != e.accessFlags&ACC_PUBLIC
+}
+func (e *Class) IsFinal() bool {
+	return 0 != e.accessFlags&ACC_FINAL
+}
+
+func (e *Class) IsSuper() bool {
+	return 0 != e.accessFlags&ACC_SUPER
+}
+
+func (e *Class) IsInterface() bool {
+	return 0 != e.accessFlags&ACC_INTERFACE
+}
+
+func (e *Class) IsAbstract() bool {
+	return 0 != e.accessFlags&ACC_ABSTRACT
+}
+func (e *Class) IsSynthetic() bool {
+	return 0 != e.accessFlags&ACC_SYNTHETIC
+}
+func (e *Class) IsAnnotation() bool {
+	return 0 != e.accessFlags&ACC_ANNOTATION
+}
+func (e *Class) IsEnum() bool {
+	return 0 != e.accessFlags&ACC_ENUM
+}
