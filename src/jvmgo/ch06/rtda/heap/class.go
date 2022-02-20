@@ -1,13 +1,12 @@
 package heap
 
-import . "jvmgo/jvmgo/ch06/classfile"
+import "jvmgo/jvmgo/ch06/classfile"
 
 /*
 	方法区是运行时数据区的一块逻辑区域，由多个线程共享。
 	方法区主要存放从class文件获取的类信息。类变量也存放在方法区内。
 	虚拟机第一次使用到某一个类时会搜索类路径，找到相应的class文件，然后读取并解析class文件，
-	把相关信息存放在方法区。虚拟机规范并没有规定方法区的具体位置，也没有规定大小信息、是否参与垃圾回收、
-	方法区如何存放类数据。
+	把相关信息存放在方法区。虚拟机规范并没有规定方法区的具体位置，也没有规定大小信息、是否参与垃圾回收、方法区如何存放类数据。
 */
 
 type Class struct {
@@ -26,7 +25,7 @@ type Class struct {
 	staticVars        *Slots
 }
 
-func newClass(cf *ClassFile) *Class {
+func newClass(cf *classfile.ClassFile) *Class {
 	class := &Class{}
 	class.accessFlags = cf.AccessFlags()
 	class.name = cf.ClassName()

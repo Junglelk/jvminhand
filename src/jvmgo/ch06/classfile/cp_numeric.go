@@ -1,6 +1,8 @@
 package classfile
 
-import "math"
+import (
+	"math"
+)
 
 // CONSTANT_Integer_info 使用 4 字节存储整数常量，结构体定义如下：
 // CONSTANT_Integer_info{
@@ -20,6 +22,10 @@ func (e *ConstantIntegerInfo) readInfo(reader *ClassReader) {
 	e.val = int32(bytes)
 }
 
+func (e *ConstantIntegerInfo) Value() int32 {
+	return e.val
+}
+
 // ConstantFloatInfo 32位浮点数常量
 type ConstantFloatInfo struct {
 	val float32
@@ -28,6 +34,10 @@ type ConstantFloatInfo struct {
 func (e *ConstantFloatInfo) readInfo(reader *ClassReader) {
 	bytes := reader.readUint32()
 	e.val = math.Float32frombits(bytes)
+}
+
+func (e *ConstantFloatInfo) Value() float32 {
+	return e.val
 }
 
 type ConstantLongInfo struct {
@@ -40,6 +50,10 @@ func (e *ConstantLongInfo) readInfo(reader *ClassReader) {
 	e.val = int64(bytes)
 }
 
+func (e *ConstantLongInfo) Value() int64 {
+	return e.val
+}
+
 // ConstantDoubleInfo 64位浮点数常量
 type ConstantDoubleInfo struct {
 	val float64
@@ -48,4 +62,8 @@ type ConstantDoubleInfo struct {
 func (e *ConstantDoubleInfo) readInfo(reader *ClassReader) {
 	bytes := reader.readUint64()
 	e.val = math.Float64frombits(bytes)
+}
+
+func (e *ConstantDoubleInfo) Value() float64 {
+	return e.val
 }
