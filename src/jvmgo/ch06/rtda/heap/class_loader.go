@@ -48,7 +48,57 @@ func link(class *Class) {
 // prepare 给类变量分配空间并给予初始值
 // 比如在类定义中，布尔型的定义初始值为false
 func prepare(class *Class) {
+	calcInstanceFieldSlotIds(class)
+	calcStaticFieldSlotIds(class)
+	allocAndInitStaticVars(class)
+}
 
+// 给类变量分配空间，然后赋予初始值
+func allocAndInitStaticVars(class *Class) {
+	class.staticVars = newSlots(class.staticSlotCount)
+	for _, field := range class.fields {
+		if field.IsStatic() && field.IsFinal() {
+			initStaticFinal(class, field)
+		}
+	}
+}
+
+func initStaticFinal(class *Class, field *Field) {
+	// todo
+}
+
+// 统计静态字段个数
+func calcStaticFieldSlotIds(class *Class) {
+	slotId := uint(0)
+	for _, field := range class.fields {
+		if !field.IsStatic() {
+			field.slotId = slotId
+			slotId++
+			if field.isLongOrDouble() {
+				slotId++
+			}
+		}
+	}
+	class.staticSlotCount = slotId
+}
+
+// 给实例字段计数
+func calcInstanceFieldSlotIds(class *Class) {
+	slotId := uint(0)
+	if class.superClass != nil {
+		// 如果有继承关系的话，则需要计算父类的实例字段数目
+		slotId = class.superClass.instanceSlotCount
+	}
+	for _, field := range class.fields {
+		if !field.IsStatic() {
+			field.slotId = slotId
+			slotId++
+			if field.isLongOrDouble() {
+				slotId++
+			}
+		}
+	}
+	class.instanceSlotCount = slotId
 }
 
 // verify 类文件的验证极其繁琐，故目前假设加载到的类文件均为可信赖的编译器编译出的合理文件

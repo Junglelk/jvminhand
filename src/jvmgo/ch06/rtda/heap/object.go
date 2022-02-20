@@ -1,5 +1,7 @@
 package heap
 
+import "jvmgo/jvmgo/ch06/rtda"
+
 /*
 	运行Java程序时，Java虚拟机需要使用内存来存放各式各样的数据。Java虚拟机规范把这些内存区域叫做运行时数据区。
 	运行时数据区可以分为两类：
@@ -52,7 +54,23 @@ package heap
 
 */
 
-// Object 到第 6 章才实现类和对象，此处仅定义一个临时结构体，来表示对象。
+// Slots LocalVars的实例可以视为一个数组，该数组的每一个实例可以容纳一个int、float或引用值，也可以使用两个位置来存放double或long
+// 可能是当时作者的go版本较低原文为 “rtda包已经依赖了heap包，而Go语言的包又不能重复依赖，所以heap包中的go文件是无法导入rtda包的”
+// 所以原实现是将Slot结构体和LocalVars重新在heap包内写了一份，但目前来看，好像是可以直接使用的，但为了方便，此处重定义了LocalVars结构为Slots
+// 如有问题，后续再做修改
+type Slots rtda.LocalVars
+
+// Object 在结构体中添加两个字段，一个存放对象的Class指针，一个存放实例变量
+// 类的字段可以有原始数据类型，也可以有引用类型，正好可以对应上述两个字段
+// 随后我们的问题是确定变量的数目和位置，前者数类的字段数即可，后者在数字段时给字段编号即可
 type Object struct {
-	// TODO
+	class *Class
+	field Slots
+}
+
+func newSlots(count uint) Slots {
+	if count > 0 {
+		return make([]rtda.Slot, count)
+	}
+	return nil
 }

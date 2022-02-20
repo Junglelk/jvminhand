@@ -39,10 +39,18 @@ func (e *ClassMember) Descriptor() string {
 func (e *ClassMember) IsPublic() bool {
 	return 0 != e.accessFlags&ACC_PUBLIC
 }
+func (e *ClassMember) IsPrivate() bool {
+	return 0 != e.accessFlags&ACC_PRIVATE
+}
+func (e *ClassMember) IsProtected() bool {
+	return 0 != e.accessFlags&ACC_PROTECTED
+}
 func (e *ClassMember) IsFinal() bool {
 	return 0 != e.accessFlags&ACC_FINAL
 }
-
+func (e *ClassMember) IsStatic() bool {
+	return 0 != e.accessFlags&ACC_STATIC
+}
 func (e *ClassMember) IsSuper() bool {
 	return 0 != e.accessFlags&ACC_SUPER
 }
@@ -62,4 +70,8 @@ func (e *ClassMember) IsAnnotation() bool {
 }
 func (e *ClassMember) IsEnum() bool {
 	return 0 != e.accessFlags&ACC_ENUM
+}
+
+func (e *Field) isLongOrDouble() bool {
+	return e.descriptor == "J" || e.descriptor == "D"
 }
