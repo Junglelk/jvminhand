@@ -65,6 +65,7 @@ func allocAndInitStaticVars(class *Class) {
 
 func initStaticFinal(class *Class, field *Field) {
 	// todo
+	// test change git user
 }
 
 // 统计静态字段个数
