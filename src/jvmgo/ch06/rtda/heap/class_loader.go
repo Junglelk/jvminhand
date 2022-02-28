@@ -64,7 +64,28 @@ func allocAndInitStaticVars(class *Class) {
 }
 
 func initStaticFinal(class *Class, field *Field) {
-	// todo
+	vars := class.staticVars
+	cp := class.constantPool
+	cpIndex := field.ConstValueIndex()
+	slotId := field.slotId
+	if cpIndex > 0 {
+		switch field.Descriptor() {
+		case "Z", "B", "S", "I", "C":
+			val := cp.GetConstant(cpIndex).(int32)
+			vars.SetInt(slotId, val)
+		case "J":
+			val := cp.GetConstant(cpIndex).(int64)
+			vars.SetLong(slotId, val)
+		case "F":
+			val := cp.GetConstant(cpIndex).(float32)
+			vars.SetFloat(slotId, val)
+		case "D":
+			val := cp.GetConstant(cpIndex).(float64)
+			vars.SetDouble(slotId, val)
+		case "Ljava/lang/String;":
+			panic("todo")
+		}
+	}
 }
 
 // 统计静态字段个数
