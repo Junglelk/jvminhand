@@ -1,6 +1,9 @@
 package heap
 
-import "jvmgo/jvmgo/ch06/classfile"
+import (
+	"jvmgo/jvmgo/ch06/classfile"
+	"strings"
+)
 
 /*
 	方法区是运行时数据区的一块逻辑区域，由多个线程共享。
@@ -63,4 +66,18 @@ func (e *Class) IsAnnotation() bool {
 }
 func (e *Class) IsEnum() bool {
 	return 0 != e.accessFlags&ACC_ENUM
+}
+
+func (e *Class) IsAccessibleTo(d *Class) bool {
+	// 类d如果想访问类e，需要满足以下两个条件之一
+	// 1. e是public的
+	// 2. 两个类在同一个包里
+	return e.IsPublic() || e.getPackageName() == d.getPackageName()
+}
+
+func (e *Class) getPackageName() string {
+	if index := strings.LastIndex(e.name, "/"); index > 0 {
+		return e.name[:index]
+	}
+	return ""
 }
