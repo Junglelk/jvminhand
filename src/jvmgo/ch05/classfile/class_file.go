@@ -60,25 +60,25 @@ func Parse(classData []byte) (cf *ClassFile, err error) {
 
 // 读取并验证一个类文件
 func (e *ClassFile) read(reader *ClassReader) {
-
+	// 读取并验证魔数
 	e.readAndCheckMagic(reader)
-
+	// 读取并验证版本
 	e.readAndCheckVersion(reader)
-
+	// 读取常量池
 	e.constantPool = readConstantPool(reader)
-
+	// 获取访问修饰符
 	e.accessFlags = reader.readUint16()
-
+	// 当前类索引
 	e.thisClass = reader.readUint16()
-
+	// 父类索引
 	e.superClass = reader.readUint16()
-
+	// 接口表
 	e.interfaces = reader.readUint16s()
-
+	// 字段表
 	e.fields = readMembers(reader, e.constantPool)
-
+	// 方法表
 	e.methods = readMembers(reader, e.constantPool)
-
+	// 属性表
 	e.attributes = readAttributes(reader, e.constantPool)
 
 }

@@ -50,6 +50,8 @@ func (e *CodeAttribute) Code() []byte {
 	return e.code
 }
 
+// 读取方法表信息，前8个字节是操作数栈深度，随后是局部变量表大小
+// 随后4个字节保存方法字节码长度
 func (e *CodeAttribute) readInfo(reader *ClassReader) {
 	e.maxStack = reader.readUint16()
 	e.maxLocals = reader.readUint16()

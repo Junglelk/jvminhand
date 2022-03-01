@@ -43,11 +43,16 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 		thread.SetPC(pc)
 		// decode
 		reader.Reset(bytecode, pc)
+		// 获取操作码
 		opcode := reader.ReadUint8()
+		// 获取指令
 		inst := instructions.NewInstruction(opcode)
+		// 获取操作数
 		inst.FetchOperands(reader)
+		// 设置下一条指令
 		frame.SetNextPC(reader.PC())
 		fmt.Printf("pc:%2d inst:%T %v\n", pc, inst, inst)
+		// 指令执行
 		inst.Execute(frame)
 	}
 }
