@@ -40,10 +40,14 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 	reader := &base.BytecodeReader{}
 	for {
 		pc := frame.NextPC()
+		// 没看懂这里为什么要设置指令
+		// 因为thread.NewFrame(maxLocals, maxStack)方法会将自身赋值给frame
+		// 而frame的当前指令码不在frame本身，而由当前线程保存
 		thread.SetPC(pc)
 		// decode
 		reader.Reset(bytecode, pc)
 		// 获取操作码
+		// pc已自增
 		opcode := reader.ReadUint8()
 		// 获取指令
 		inst := instructions.NewInstruction(opcode)
